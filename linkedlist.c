@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 struct Node{
     int data;
     struct Node* next;
@@ -41,6 +44,7 @@ void insertAfter(struct Node* prev, int data){
 
 void deleteByValue(struct Node** head, int data){
     struct Node* temp = *head;
+    struct Node* prev = NULL;
     
     if(temp != NULL && temp->data == data){
         *head = temp->next;
@@ -48,24 +52,30 @@ void deleteByValue(struct Node** head, int data){
         return;
     }
     
-    while(temp->data != NULL && temp->data != NULL){
-        if(temp->next->data == data){
-            struct Node* delete = temp->next;
-            temp->next = delete->next;
-            free(delete);
-            return;
-        }
+    while(temp != NULL && temp->data != data){
+        prev = temp;
         temp = temp->next;
     }
     
-    printf("value was not found");
+    if(temp == NULL){
+        printf("value was not found");
+        return;
+    }
+    
+    prev->next = temp->next;
+    free(temp);
 }
 
-#include <iostream>
+void printlist(struct Node* head){
+    while(head != NULL){
+        printf("%d -> ", head->data);
+        head = head->data;
+    }
+    printf("NULL\n");
+}
 
-int main(int argc, char argv[][])
+int main()
 {
-    std::cout<<"Hello World";
 
     return 0;
 }
